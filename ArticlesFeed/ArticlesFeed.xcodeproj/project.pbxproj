@@ -14,6 +14,7 @@
 		A8AAA50D1C9552A900E47771 /* ArticlesFeedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AAA50C1C9552A900E47771 /* ArticlesFeedTests.m */; };
 		A8AAA5181C9552A900E47771 /* ArticlesFeedUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AAA5171C9552A900E47771 /* ArticlesFeedUITests.m */; };
 		A8E3A0541C9553470045489A /* FeedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E3A0531C9553470045489A /* FeedTableViewController.m */; };
+		A8E3A0581C9559110045489A /* Article.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E3A0571C9559110045489A /* Article.m */; };
 		EFC33016E86FF23BE38CA9DB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1A067B15DA6DBA1EF41A0E6 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +52,8 @@
 		A8AAA5191C9552A900E47771 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A8E3A0521C9553470045489A /* FeedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedTableViewController.h; sourceTree = "<group>"; };
 		A8E3A0531C9553470045489A /* FeedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedTableViewController.m; sourceTree = "<group>"; };
+		A8E3A0561C9559110045489A /* Article.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Article.h; sourceTree = "<group>"; };
+		A8E3A0571C9559110045489A /* Article.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Article.m; sourceTree = "<group>"; };
 		B9C3EC33D95E557F8F5A0314 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		C1A067B15DA6DBA1EF41A0E6 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -123,6 +126,7 @@
 		A8AAA4F11C9552A900E47771 /* ArticlesFeed */ = {
 			isa = PBXGroup;
 			children = (
+				A8E3A0551C9558F60045489A /* Model */,
 				A8E3A0511C9553340045489A /* ViewController */,
 				A8AAA4F51C9552A900E47771 /* AppDelegate.h */,
 				A8AAA4F61C9552A900E47771 /* AppDelegate.m */,
@@ -167,6 +171,15 @@
 				A8E3A0531C9553470045489A /* FeedTableViewController.m */,
 			);
 			name = ViewController;
+			sourceTree = "<group>";
+		};
+		A8E3A0551C9558F60045489A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A8E3A0561C9559110045489A /* Article.h */,
+				A8E3A0571C9559110045489A /* Article.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -349,6 +362,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8E3A0581C9559110045489A /* Article.m in Sources */,
 				A8AAA4F71C9552A900E47771 /* AppDelegate.m in Sources */,
 				A8AAA4F41C9552A900E47771 /* main.m in Sources */,
 				A8E3A0541C9553470045489A /* FeedTableViewController.m in Sources */,

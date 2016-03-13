@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AFNetworking.h>
+#import "Article.h"
 
 @interface FeedTableViewController : UITableViewController
 

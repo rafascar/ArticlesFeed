@@ -10,6 +10,9 @@
 
 @interface FeedTableViewController ()
 
+// Array of articles
+@property (strong, nonatomic) NSArray *articles;
+
 @end
 
 @implementation FeedTableViewController
@@ -17,11 +20,37 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    // Set navigation bar title
+    self.title = @"Feed";
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    // URL with JSON list of articles
+    NSURL *URL = [NSURL URLWithString:@"https://www.ckl.io/challenge/"];
+    // Fetch and parse JSON list of articles
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:URL.absoluteString parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject){
+        
+        // Create temporary mutable array of articles
+        NSMutableArray *articlesTemp = [[NSMutableArray alloc] init];
+        // Create a new article for each article parsed from the JSON file
+        for (NSDictionary *article in responseObject)
+        {
+            Article *newArticle = [[Article alloc] initWithTitle:article[@"title"]
+                                                         website:article[@"website"]
+                                                         authors:article[@"authors"]
+                                                            date:article[@"date"]
+                                                         content:article[@"content"]
+                                                           image:article[@"image"]];
+            // Add article to the temporary mutable array of articles
+            [articlesTemp addObject:newArticle];
+        }
+        // Copy temporary mutable array of articles to the real array
+        self.articles = [[NSArray alloc] initWithArray:articlesTemp];
+        // Reload the TableView data
+        //[self.tableView reloadData];
+        
+    } failure:^(NSURLSessionDataTask *operation, NSError *error) {
+        NSLog(@"JSON: %@", error);
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -31,14 +60,9 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+    // Return number of articles in the list of articles
+    return self.articles.count;
 }
 
 /*
