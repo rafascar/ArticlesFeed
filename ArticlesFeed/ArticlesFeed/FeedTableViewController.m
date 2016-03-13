@@ -101,7 +101,7 @@
     }
     else
     {
-        [cell.imageImageView setImageWithURL:[NSURL URLWithString:article.image] placeholderImage:[UIImage imageNamed:@"image-placeholder"]];
+        [cell.imageImageView sd_setImageWithURL:[NSURL URLWithString:article.image] placeholderImage:[UIImage imageNamed:@"image-placeholder"]];
     }
     
     return cell;

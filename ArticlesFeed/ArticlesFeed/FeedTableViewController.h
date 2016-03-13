@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <AFNetworking.h>
-#import <UIImageView+AFNetworking.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 
 #import "Article.h"
 #import "ArticleTableViewCell.h"
