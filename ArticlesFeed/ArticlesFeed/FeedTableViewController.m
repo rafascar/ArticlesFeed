@@ -46,7 +46,7 @@
         // Copy temporary mutable array of articles to the real array
         self.articles = [[NSArray alloc] initWithArray:articlesTemp];
         // Reload the TableView data
-        //[self.tableView reloadData];
+        [self.tableView reloadData];
         
     } failure:^(NSURLSessionDataTask *operation, NSError *error) {
         NSLog(@"JSON: %@", error);
@@ -65,15 +65,48 @@
     return self.articles.count;
 }
 
-/*
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+#warning Height hardcoded, find a way to parametrize!
+    // Return the height of each cell
+    return 180;
+}
+
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    // Dequeue custom ArticleTableViewCell cell
+    ArticleTableViewCell *cell = (ArticleTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"ArticleCell"];
     
-    // Configure the cell...
+    // Check if cell was successfully dequeuable
+    if (cell == nil)
+    {
+        // Create a new custom ArticleTableViewCell cell
+        NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ArticleTableViewCell" owner:self options:nil];
+        cell = [nibArray objectAtIndex:0];
+    }
+    
+    // Create article that will populate the cell
+    Article *article = [self.articles objectAtIndex:indexPath.row];
+    
+    // Populate the cell with article informations
+    cell.titleLabel.text = article.title;
+    cell.dateLabel.text = article.date;
+    cell.authorsLabel.text = article.authors;
+    cell.websiteLabel.text = article.website;
+    
+    // Check if article's image was specified in the JSON file
+    if([article.image isKindOfClass:[NSNull class]])
+    {
+        cell.imageImageView.image = [UIImage imageNamed:@"image-placeholder"];
+    }
+    else
+    {
+        [cell.imageImageView setImageWithURL:[NSURL URLWithString:article.image] placeholderImage:[UIImage imageNamed:@"image-placeholder"]];
+    }
     
     return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.

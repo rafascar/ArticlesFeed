@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <AFNetworking.h>
+#import <UIImageView+AFNetworking.h>
+
 #import "Article.h"
+#import "ArticleTableViewCell.h"
 
 @interface FeedTableViewController : UITableViewController
 
