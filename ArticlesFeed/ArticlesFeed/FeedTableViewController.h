@@ -16,4 +16,16 @@
 
 @interface FeedTableViewController : UITableViewController
 
+// Enumeration with sort options (date, title, author, website)
+typedef enum
+{
+    SortTypeDate = 0,
+    SortTypeTitle = 1,
+    SortTypeAuthor = 2,
+    SortTypeWebsite = 3
+} SortType;
+
+- (void)didPressSortButton:(id)sender;
+- (void)sortArticlesBy:(SortType)sortType;
+
 @end

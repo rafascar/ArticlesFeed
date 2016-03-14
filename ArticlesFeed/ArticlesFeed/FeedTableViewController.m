@@ -23,6 +23,11 @@
     // Set navigation bar title
     self.title = @"Feed";
     
+    // Add sort button to the navigation bar
+    UIBarButtonItem *sortButton = [[UIBarButtonItem alloc] initWithTitle:@"Sort" style:UIBarButtonItemStylePlain target:self action:@selector(didPressSortButton:)];
+    self.navigationItem.rightBarButtonItem = sortButton;
+    
+    /* --- BEGIN: JSON --- */
     // URL with JSON list of articles
     NSURL *URL = [NSURL URLWithString:@"https://www.ckl.io/challenge/"];
     // Fetch and parse JSON list of articles
@@ -51,6 +56,92 @@
     } failure:^(NSURLSessionDataTask *operation, NSError *error) {
         NSLog(@"JSON: %@", error);
     }];
+    /* --- END: JSON --- */
+    
+}
+
+
+- (void)didPressSortButton:(id)sender
+{
+    // Create AlertController with sort options
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Sort by:"
+                                                                   message:nil
+                                                            preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    // Create sort options (date:0, title:1, author:2, website:3) and cancel
+    UIAlertAction* sortDateAction = [UIAlertAction actionWithTitle:@"Date" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) { [self sortArticlesBy:0]; }];
+    UIAlertAction *sortTitleAction = [UIAlertAction actionWithTitle:@"Title" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) { [self sortArticlesBy:1]; }];
+    UIAlertAction *sortAuthorAction = [UIAlertAction actionWithTitle:@"Author" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) { [self sortArticlesBy:2]; }];
+    UIAlertAction *sortWebsiteAction = [UIAlertAction actionWithTitle:@"Website" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) { [self sortArticlesBy:3]; }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) { }];
+    
+    // Add sort options and cancel to the AlertController
+    [alert addAction:sortDateAction];
+    [alert addAction:sortTitleAction];
+    [alert addAction:sortAuthorAction];
+    [alert addAction:sortWebsiteAction];
+    [alert addAction:cancelAction];
+    
+    // Present AlertController
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)sortArticlesBy:(SortType)sortType
+{
+    // Copy of the array of unsorted articles for the animation
+    NSArray *unsortedArticles = [self.articles copy];
+    
+    // Sort the articles based on users choice (date, title, author, website)
+    NSString *key;
+    switch (sortType) {
+        case SortTypeDate:
+            key = @"date";
+            break;
+        case SortTypeTitle:
+            key = @"title";
+            break;
+        case SortTypeAuthor:
+            key = @"authors";
+            break;
+        case SortTypeWebsite:
+            key = @"website";
+            break;
+    }
+    // Create SortDescriptor with selected key
+    NSSortDescriptor *sortDescriptor = sortDescriptor = [[NSSortDescriptor alloc] initWithKey:key ascending:YES];
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    // Sort articles
+    self.articles = [self.articles sortedArrayUsingDescriptors:sortDescriptors];
+    
+    /*self.articles = [self.articles sortedArrayUsingComparator:^(Article *a1, Article *a2){
+        return [a1.date compare:a2.date];
+    }];*/
+    
+    // Prepare table for the animation batch
+    [self.tableView beginUpdates];
+    
+    // Move the cells around
+    NSInteger sourceRow = 0;
+    for(NSString *article in unsortedArticles)
+    {
+        NSInteger destRow = [self.articles indexOfObject:article];
+        
+        if (destRow != sourceRow)
+        {
+            // Move the rows within the table view
+            NSIndexPath *sourceIndexPath = [NSIndexPath indexPathForItem:sourceRow inSection:0];
+            NSIndexPath *destIndexPath = [NSIndexPath indexPathForItem:destRow inSection:0];
+            [self.tableView moveRowAtIndexPath:sourceIndexPath toIndexPath:destIndexPath];
+        }
+        sourceRow++;
+    }
+    
+    // Commit animations
+    [self.tableView endUpdates];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -70,8 +161,6 @@
     // Return the height of each cell
     return 180;
 }
-
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     // Dequeue custom ArticleTableViewCell cell
