@@ -16,6 +16,7 @@
 @property (strong, nonatomic) NSString *date;
 @property (strong, nonatomic) NSString *content;
 @property (strong, nonatomic) NSString *image;
+@property BOOL read;
 
 - (id)initWithTitle:(NSString *)aTitle
             website:(NSString *)aWebsite

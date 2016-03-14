@@ -172,12 +172,6 @@
         // Create a new custom ArticleTableViewCell cell
         NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ArticleTableViewCell" owner:self options:nil];
         cell = [nibArray objectAtIndex:0];
-        // Add swipeble left button to mark/unmark as read
-        cell.leftButtons = @[[MGSwipeButton buttonWithTitle:@"Mark \ras Read"
-                                            backgroundColor:[UIColor colorWithRed:0.137 green:0.757 blue:1 alpha:1] /*#23c1ff*/
-                                                   callback:^BOOL(MGSwipeTableCell *sender) {
-                                                       return [self didSelectReadButton:indexPath];
-                                                   }]];
     }
     
     // Create article that will populate the cell
@@ -199,8 +193,32 @@
         [cell.imageImageView sd_setImageWithURL:[NSURL URLWithString:article.image] placeholderImage:[UIImage imageNamed:@"image-placeholder"]];
     }
     
+    cell.leftButtons = nil;
+    cell.rightButtons = nil;
+    if(article.read)
+    {
+        MGSwipeButton *rightButton = [MGSwipeButton buttonWithTitle:@"Unmark \ras Read"
+                                                    backgroundColor:[UIColor colorWithRed:1 green:0.455 blue:0.369 alpha:1] /*#ff745e*/
+                                                           callback:^BOOL(MGSwipeTableCell *sender) {
+                                                               [self onSwipeButtonPressed:(ArticleTableViewCell *)sender];
+                                                               return YES;
+                                                           }];
+        cell.rightButtons = @[rightButton];
+    }
+    else
+    {
+        MGSwipeButton *leftButton = [MGSwipeButton buttonWithTitle:@"Mark \ras Read"
+                                                   backgroundColor:[UIColor colorWithRed:0.137 green:0.757 blue:1 alpha:1] /*#23c1ff*/
+                                                          callback:^BOOL(MGSwipeTableCell *sender) {
+                                                              [self onSwipeButtonPressed:(ArticleTableViewCell *)sender];
+                                                              return YES;
+                                                          }];
+        cell.leftButtons = @[leftButton];
+    }
+    
     return cell;
 }
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -210,6 +228,9 @@
     // Article to be passed to ArticleViewController
     ArticleViewController *articleVC = [[ArticleViewController alloc] init];
     articleVC.article = self.articles[indexPath.row];
+    // Show/hide mark as read image
+    Article *article = [self.articles objectAtIndex:indexPath.row];
+    articleVC.markAsRead = article.read;
     
     // Navigate to ArticleViewController
     [self.navigationController pushViewController:articleVC animated:YES];
@@ -217,12 +238,14 @@
 
 #pragma mark - MGSwipeButton event handling
 
-- (BOOL)didSelectReadButton:(NSIndexPath *)indexPath
+- (void)onSwipeButtonPressed:(ArticleTableViewCell *)sender
 {
-    NSLog(@"%", indexPath.row);
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+    Article *article = [self.articles objectAtIndex:indexPath.row];
     
-    // Return YES to auto-hide swipe button after selection
-    return YES;
+    article.read = !article.read;
+    NSLog(@"Article no: %ld, read: %d", indexPath.row, article.read);
+    
 }
 
 /*

@@ -16,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *authorsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *websiteLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *readImageView;
+@property (weak, nonatomic) IBOutlet UIView *view;
 
 
 @end

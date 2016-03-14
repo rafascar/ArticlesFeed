@@ -20,8 +20,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *authorsLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIImageView *readImageView;
 
 // Article received by the selected row
 @property (strong, nonatomic) Article *article;
+@property BOOL markAsRead;
 
 @end
