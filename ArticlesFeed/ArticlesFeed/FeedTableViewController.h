@@ -12,6 +12,7 @@
 
 #import "Article.h"
 #import "ArticleTableViewCell.h"
+#import "ArticleViewController.h"
 
 @interface FeedTableViewController : UITableViewController
 

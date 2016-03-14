@@ -107,6 +107,18 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Descekect row before navigation
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    // Article to be passed to ArticleViewController
+    ArticleViewController *articleVC = [[ArticleViewController alloc] init];
+    articleVC.article = self.articles[indexPath.row];
+    
+    // Navigate to ArticleViewController
+    [self.navigationController pushViewController:articleVC animated:YES];
+}
 
 /*
 // Override to support conditional editing of the table view.
