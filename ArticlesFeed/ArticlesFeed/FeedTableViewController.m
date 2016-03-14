@@ -172,6 +172,12 @@
         // Create a new custom ArticleTableViewCell cell
         NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ArticleTableViewCell" owner:self options:nil];
         cell = [nibArray objectAtIndex:0];
+        // Add swipeble left button to mark/unmark as read
+        cell.leftButtons = @[[MGSwipeButton buttonWithTitle:@"Mark \ras Read"
+                                            backgroundColor:[UIColor colorWithRed:0.137 green:0.757 blue:1 alpha:1] /*#23c1ff*/
+                                                   callback:^BOOL(MGSwipeTableCell *sender) {
+                                                       return [self didSelectReadButton:indexPath];
+                                                   }]];
     }
     
     // Create article that will populate the cell
@@ -207,6 +213,16 @@
     
     // Navigate to ArticleViewController
     [self.navigationController pushViewController:articleVC animated:YES];
+}
+
+#pragma mark - MGSwipeButton event handling
+
+- (BOOL)didSelectReadButton:(NSIndexPath *)indexPath
+{
+    NSLog(@"%", indexPath.row);
+    
+    // Return YES to auto-hide swipe button after selection
+    return YES;
 }
 
 /*
