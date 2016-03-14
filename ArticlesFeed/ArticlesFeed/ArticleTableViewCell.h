@@ -7,14 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MGSwipeTableCell.h>
 
-@interface ArticleTableViewCell : UITableViewCell
+@interface ArticleTableViewCell : MGSwipeTableCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageImageView;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *authorsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *websiteLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *readImageView;
+@property (weak, nonatomic) IBOutlet UIView *view;
 
+@property BOOL markAsRead;
 
 @end

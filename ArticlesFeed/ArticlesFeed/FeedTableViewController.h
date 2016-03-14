@@ -14,7 +14,7 @@
 #import "ArticleTableViewCell.h"
 #import "ArticleViewController.h"
 
-@interface FeedTableViewController : UITableViewController
+@interface FeedTableViewController : UITableViewController <MGSwipeTableCellDelegate>
 
 // Enumeration with sort options (date, title, author, website)
 typedef enum
@@ -24,6 +24,8 @@ typedef enum
     SortTypeAuthor = 2,
     SortTypeWebsite = 3
 } SortType;
+
+@property (strong, nonatomic) UIDynamicAnimator *animator;
 
 - (void)didPressSortButton:(id)sender;
 - (void)sortArticlesBy:(SortType)sortType;

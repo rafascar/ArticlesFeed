@@ -40,6 +40,7 @@
     self.date = aDate;
     self.content = aContent;
     self.image = anImage;
+    self.read = NO;
     
     return self;
 }
