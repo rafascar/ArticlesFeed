@@ -19,5 +19,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *readImageView;
 @property (weak, nonatomic) IBOutlet UIView *view;
 
+@property BOOL markAsRead;
 
 @end
