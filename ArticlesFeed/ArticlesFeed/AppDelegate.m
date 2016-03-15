@@ -6,6 +6,8 @@
 //  Copyright © 2016 rafascar. All rights reserved.
 //
 
+// Pull request assigned to @brunoguerios to submit the challenge.
+
 #import "AppDelegate.h"
 
 @interface AppDelegate ()
