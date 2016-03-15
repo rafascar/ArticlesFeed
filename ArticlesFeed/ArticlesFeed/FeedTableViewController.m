@@ -21,7 +21,7 @@
     [super viewDidLoad];
     
     // Set navigation bar title
-    self.title = @"Feed";
+    self.title = @"FEED";
     
     // Set Navigation Controller Delegate to self
     self.navigationController.delegate = self;
@@ -186,7 +186,6 @@
     {
         [cell.imageImageView sd_setImageWithURL:[NSURL URLWithString:article.image] placeholderImage:[UIImage imageNamed:@"image-placeholder"]];
     }
-    
     
     // Delete swift buttons
     cell.leftButtons = nil;

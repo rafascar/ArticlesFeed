@@ -17,7 +17,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Add mark/unmark as read button to navigation bar
-    UIBarButtonItem *readButton = [[UIBarButtonItem alloc] initWithTitle:@"Unmark as read" style:UIBarButtonItemStylePlain target:self action:@selector(didPressReadButton:)];
+    UIBarButtonItem *readButton = [[UIBarButtonItem alloc] initWithTitle:@"Unmark as Read" style:UIBarButtonItemStylePlain target:self action:@selector(didPressReadButton:)];
+    NSArray *possibleTitles = @[@"Mark as Read", @"Unmark as Read"];
+    readButton.possibleTitles = [NSSet setWithArray:possibleTitles];
     self.navigationItem.rightBarButtonItem = readButton;
 }
 
@@ -62,13 +64,13 @@
     [self.view layoutIfNeeded];
  
     // Disable button until animation is completed
-    self.navigationItem.leftBarButtonItem.enabled = NO;
+    //self.navigationItem.leftBarButtonItem.enabled = NO;
     
     // Check if article is marked as read
     if(self.article.read)
     {
         // Change button title to Mark as read
-        self.navigationItem.rightBarButtonItem.title = @"Mark as read";
+        self.navigationItem.rightBarButtonItem.title = @"Mark as Read";
         // Animate readImageView movement
         [UIView animateWithDuration:1
                          animations:^{
@@ -86,7 +88,7 @@
     else
     {
         // Change button title to Mark as Unread
-        self.navigationItem.rightBarButtonItem.title = @"Unmark as read";
+        self.navigationItem.rightBarButtonItem.title = @"Unmark as Read";
         // Animate readImageView movement
         [UIView animateWithDuration:1
                          animations:^{

@@ -26,6 +26,12 @@
     // Create a Navigation Controller and set feedTVC as rootViewController
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:feedTVC];
     
+    // Customize navigation bar style
+    nav.navigationBar.barStyle = UIBarStyleBlack;
+    nav.navigationBar.barTintColor = [UIColor lightGrayColor];
+    nav.navigationBar.tintColor = [UIColor whiteColor];
+    [nav.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    
     // Receive all keyboard and non-touch events
     [self.window makeKeyAndVisible];
     // Set nav as rootViewController
