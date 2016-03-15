@@ -30,7 +30,18 @@
     UIBarButtonItem *sortButton = [[UIBarButtonItem alloc] initWithTitle:@"Sort" style:UIBarButtonItemStylePlain target:self action:@selector(didPressSortButton:)];
     self.navigationItem.rightBarButtonItem = sortButton;
     
-    /* --- BEGIN: JSON --- */
+    // Initialize the refresh control
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.backgroundColor = [UIColor whiteColor];
+    self.refreshControl.tintColor = [UIColor grayColor];
+    [self.refreshControl addTarget:self action:@selector(fetchArticlesFromJSON) forControlEvents:UIControlEventValueChanged];
+    
+    [self fetchArticlesFromJSON];
+    
+}
+
+- (void)fetchArticlesFromJSON
+{
     // URL with JSON list of articles
     NSURL *URL = [NSURL URLWithString:@"https://www.ckl.io/challenge/"];
     // Fetch and parse JSON list of articles
@@ -58,11 +69,18 @@
         
     } failure:^(NSURLSessionDataTask *operation, NSError *error) {
         NSLog(@"JSON: %@", error);
+        
+        // Show alert indicating failure
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error" message:[error localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
+        [alertController addAction:ok];
+        
+        // Show controller
+        [self presentViewController:alertController animated:YES completion:nil];
     }];
-    /* --- END: JSON --- */
-    
-}
 
+    [self.refreshControl endRefreshing];
+}
 
 - (void)didPressSortButton:(id)sender
 {
@@ -144,6 +162,35 @@
 }
 
 #pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    // Check if articles were fetched
+    if(self.articles)
+    {
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        return 1;
+    }
+    else
+    {
+        // Display a message when the table is empty
+        UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+        
+        // Set label content and style
+        messageLabel.text = @"No data is currently available. Please pull down to refresh.";
+        messageLabel.textColor = [UIColor blackColor];
+        messageLabel.numberOfLines = 0;
+        messageLabel.textAlignment = NSTextAlignmentCenter;
+        messageLabel.font = [UIFont fontWithName:@"Palatino-Italic" size:20];
+        [messageLabel sizeToFit];
+        
+        // Add label to background view
+        self.tableView.backgroundView = messageLabel;
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    }
+    
+    return 0;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return number of articles in the list of articles

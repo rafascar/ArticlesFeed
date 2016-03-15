@@ -38,7 +38,7 @@
         [self.imageImageView sd_setImageWithURL:[NSURL URLWithString:self.article.image] placeholderImage:[UIImage imageNamed:@"image-placeholder"]];
     
     // Animate readImageView movement
-    [UIView animateWithDuration:1
+    [UIView animateWithDuration:0.5
                      animations:^{
                          // Show readImageView
                          self.readImageView.hidden = NO;
@@ -72,7 +72,7 @@
         // Change button title to Mark as read
         self.navigationItem.rightBarButtonItem.title = @"Mark as Read";
         // Animate readImageView movement
-        [UIView animateWithDuration:1
+        [UIView animateWithDuration:0.5
                          animations:^{
                              // Set constraint to go up
                              self.readImageViewBottomConstraint.constant = 0;
@@ -90,7 +90,7 @@
         // Change button title to Mark as Unread
         self.navigationItem.rightBarButtonItem.title = @"Unmark as Read";
         // Animate readImageView movement
-        [UIView animateWithDuration:1
+        [UIView animateWithDuration:0.5
                          animations:^{
                              // Show readImageView
                              self.readImageView.hidden = NO;
