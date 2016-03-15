@@ -8,7 +8,7 @@
 
 #import "FeedTableViewController.h"
 
-@interface FeedTableViewController ()
+@interface FeedTableViewController () <UINavigationControllerDelegate, MGSwipeTableCellDelegate>
 
 // Array of articles
 @property (strong, nonatomic) NSArray *articles;
@@ -22,6 +22,9 @@
     
     // Set navigation bar title
     self.title = @"Feed";
+    
+    // Set Navigation Controller Delegate to self
+    self.navigationController.delegate = self;
     
     // Add sort button to the navigation bar
     UIBarButtonItem *sortButton = [[UIBarButtonItem alloc] initWithTitle:@"Sort" style:UIBarButtonItemStylePlain target:self action:@selector(didPressSortButton:)];
@@ -144,11 +147,6 @@
     [self.tableView endUpdates];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -194,7 +192,6 @@
     }
     
     
-    
     // Delete swift buttons
     cell.leftButtons = nil;
     cell.rightButtons = nil;
@@ -207,9 +204,7 @@
         MGSwipeButton *rightButton = [MGSwipeButton buttonWithTitle:@"Unmark \ras Read"
                                                     backgroundColor:[UIColor colorWithRed:1 green:0.455 blue:0.369 alpha:1] /*#ff745e*/
                                                            callback:^BOOL(MGSwipeTableCell *sender) {
-                                                               [self onSwipeButtonPressed:(ArticleTableViewCell *)sender];
-                                                               return YES;
-                                                           }];
+                                                               return [self onSwipeButtonPressed:(ArticleTableViewCell *)sender]; }];
         cell.rightButtons = @[rightButton];
     }
     else
@@ -220,12 +215,10 @@
         MGSwipeButton *leftButton = [MGSwipeButton buttonWithTitle:@"Mark \ras Read"
                                                    backgroundColor:[UIColor colorWithRed:0.137 green:0.757 blue:1 alpha:1] /*#23c1ff*/
                                                           callback:^BOOL(MGSwipeTableCell *sender) {
-                                                              [self onSwipeButtonPressed:(ArticleTableViewCell *)sender];
-                                                              return YES;
-                                                          }];
+                                                              return [self onSwipeButtonPressed:(ArticleTableViewCell *)sender]; }];
         cell.leftButtons = @[leftButton];
     }
-    
+
     return cell;
 }
 
@@ -240,15 +233,22 @@
     articleVC.article = self.articles[indexPath.row];
     // Show/hide mark as read image
     Article *article = [self.articles objectAtIndex:indexPath.row];
+    article.read = YES;
     articleVC.markAsRead = article.read;
     
     // Navigate to ArticleViewController
     [self.navigationController pushViewController:articleVC animated:YES];
 }
 
-#pragma mark - MGSwipeButton event handling
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    // Reload data to update mark/unmark as read icons and buttons
+    [self.tableView reloadData];
+    
+    NSLog(@"reload data");
+}
 
-- (void)onSwipeButtonPressed:(ArticleTableViewCell *)cell
+- (BOOL)onSwipeButtonPressed:(ArticleTableViewCell *)cell
 {
     // Get index of selected cell
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
@@ -258,38 +258,11 @@
     // Mark/Unmark as read
     article.read = !article.read;
     
-    // Delete swift buttons
-    cell.leftButtons = nil;
-    cell.rightButtons = nil;
-    // Check if article is marked/unmarked as read
-    if(article.read)
-    {
-        // Show marked as read image
-        cell.readImageView.alpha = 1;
-        // Add button to unmark as read
-        MGSwipeButton *rightButton = [MGSwipeButton buttonWithTitle:@"Unmark \ras Read"
-                                                    backgroundColor:[UIColor colorWithRed:1 green:0.455 blue:0.369 alpha:1] /*#ff745e*/
-                                                           callback:^BOOL(MGSwipeTableCell *sender) {
-                                                               [self onSwipeButtonPressed:(ArticleTableViewCell *)sender];
-                                                               return YES;
-                                                           }];
-        cell.rightButtons = @[rightButton];
-    }
-    else
-    {
-        // Hide marked as read image
-        cell.readImageView.alpha = 0;
-        // Add button to mark as read
-        MGSwipeButton *leftButton = [MGSwipeButton buttonWithTitle:@"Mark \ras Read"
-                                                   backgroundColor:[UIColor colorWithRed:0.137 green:0.757 blue:1 alpha:1] /*#23c1ff*/
-                                                          callback:^BOOL(MGSwipeTableCell *sender) {
-                                                              [self onSwipeButtonPressed:(ArticleTableViewCell *)sender];
-                                                              return YES;
-                                                          }];
-        cell.leftButtons = @[leftButton];
-    }
+    // Reload data to update mark/unmark as read icons and buttons
+    [self.tableView reloadData];
+    
+    return YES;
 }
-
 
 
 /*

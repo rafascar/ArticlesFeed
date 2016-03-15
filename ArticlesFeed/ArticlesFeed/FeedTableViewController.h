@@ -14,7 +14,7 @@
 #import "ArticleTableViewCell.h"
 #import "ArticleViewController.h"
 
-@interface FeedTableViewController : UITableViewController <MGSwipeTableCellDelegate>
+@interface FeedTableViewController : UITableViewController
 
 // Enumeration with sort options (date, title, author, website)
 typedef enum

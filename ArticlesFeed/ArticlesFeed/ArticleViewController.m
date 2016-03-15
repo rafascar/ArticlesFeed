@@ -31,7 +31,6 @@
         self.imageImageView.image = [UIImage imageNamed:@"image-placeholder"];
     else
         [self.imageImageView sd_setImageWithURL:[NSURL URLWithString:self.article.image] placeholderImage:[UIImage imageNamed:@"image-placeholder"]];
-
     
     // Show/hide mark as read image
     self.readImageView.hidden = !self.markAsRead;
