@@ -64,7 +64,6 @@
     [self.view layoutIfNeeded];
  
     // Disable button until animation is completed
-    //self.navigationItem.leftBarButtonItem.enabled = NO;
     
     // Check if article is marked as read
     if(self.article.read)
@@ -81,8 +80,6 @@
                          completion:^(BOOL finished) {
                              // Hide readImageView after animation
                              self.readImageView.hidden = YES;
-                             // Enable button
-                             //self.navigationItem.leftBarButtonItem.enabled = YES;
                          }];
     }
     else
@@ -97,10 +94,6 @@
                              // Set constraint to go down
                              self.readImageViewBottomConstraint.constant = -123;
                              [self.view layoutIfNeeded];
-                         }
-                         completion:^(BOOL finished) {
-                             // Enable button
-                             //self.navigationItem.leftBarButtonItem.enabled = YES;
                          }];
     }
     

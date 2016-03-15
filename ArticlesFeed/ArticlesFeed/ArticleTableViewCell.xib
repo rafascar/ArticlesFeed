@@ -96,6 +96,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="mark-as-read" width="32" height="86"/>
+        <image name="mark-as-read" width="21" height="57"/>
     </resources>
 </document>

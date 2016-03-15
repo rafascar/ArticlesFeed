@@ -168,7 +168,11 @@
     // Check if articles were fetched
     if(self.articles)
     {
-        self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
+        // Remove refresh control
+        [self.refreshControl removeFromSuperview];
+        // Remove background view
+        self.tableView.backgroundView = nil;
         return 1;
     }
     else
@@ -198,7 +202,6 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-#warning Height hardcoded, find a way to parametrize!
     // Return the height of each cell
     return 180;
 }
@@ -214,6 +217,9 @@
         NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ArticleTableViewCell" owner:self options:nil];
         cell = [nibArray objectAtIndex:0];
     }
+    
+    // Set selection style
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     // Create article that will populate the cell
     Article *article = [self.articles objectAtIndex:indexPath.row];
@@ -284,8 +290,9 @@
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    // Reload data to update mark/unmark as read icons and buttons
-    [self.tableView reloadData];
+    if(viewController == self)
+        // Reload data to update mark/unmark as read icons and buttons
+        [self.tableView reloadData];
 }
 
 - (BOOL)onSwipeButtonPressed:(ArticleTableViewCell *)cell
