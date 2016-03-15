@@ -21,9 +21,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *authorsLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIImageView *readImageView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *readImageViewBottomConstraint;
 
 // Article received by the selected row
 @property (strong, nonatomic) Article *article;
+@property (strong, nonatomic) UIDynamicAnimator *animator;
 @property BOOL markAsRead;
+
 
 @end

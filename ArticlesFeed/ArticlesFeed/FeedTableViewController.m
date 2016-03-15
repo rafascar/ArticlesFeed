@@ -120,10 +120,6 @@
     // Sort articles
     self.articles = [self.articles sortedArrayUsingDescriptors:sortDescriptors];
     
-    /*self.articles = [self.articles sortedArrayUsingComparator:^(Article *a1, Article *a2){
-        return [a1.date compare:a2.date];
-    }];*/
-    
     // Prepare table for the animation batch
     [self.tableView beginUpdates];
     
@@ -244,8 +240,6 @@
 {
     // Reload data to update mark/unmark as read icons and buttons
     [self.tableView reloadData];
-    
-    NSLog(@"reload data");
 }
 
 - (BOOL)onSwipeButtonPressed:(ArticleTableViewCell *)cell

@@ -12,6 +12,7 @@
                 <outlet property="dateLabel" destination="CuH-rj-V9V" id="cMY-ZP-T2C"/>
                 <outlet property="imageImageView" destination="MZ9-eR-avB" id="J9a-cO-p8F"/>
                 <outlet property="readImageView" destination="YP3-yz-9Le" id="6Ep-Z5-Kx2"/>
+                <outlet property="readImageViewBottomConstraint" destination="S7m-hq-kum" id="mma-WO-paF"/>
                 <outlet property="scrollView" destination="e2h-W8-wua" id="M2i-Td-QPz"/>
                 <outlet property="titleLabel" destination="uK3-g1-Wyo" id="Faw-hL-ORB"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -63,7 +64,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mark-as-read" translatesAutoresizingMaskIntoConstraints="NO" id="YP3-yz-9Le" userLabel="readImageView">
-                            <rect key="frame" x="539" y="-3" width="53" height="126"/>
+                            <rect key="frame" x="539" y="-126" width="53" height="126"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="53" id="FgA-rT-6cl"/>
                                 <constraint firstAttribute="height" constant="126" id="wTL-G1-SaX"/>
@@ -78,7 +79,7 @@
                         <constraint firstItem="tln-Yn-PZb" firstAttribute="top" secondItem="bJR-9J-JkQ" secondAttribute="bottom" constant="12" id="BXM-ba-lZp"/>
                         <constraint firstItem="bJR-9J-JkQ" firstAttribute="top" secondItem="MZ9-eR-avB" secondAttribute="bottom" constant="20" id="DZo-Xe-1eu"/>
                         <constraint firstItem="MZ9-eR-avB" firstAttribute="top" secondItem="e2h-W8-wua" secondAttribute="top" id="EVJ-6V-qhU"/>
-                        <constraint firstItem="MZ9-eR-avB" firstAttribute="top" secondItem="YP3-yz-9Le" secondAttribute="bottom" constant="-123" id="S7m-hq-kum"/>
+                        <constraint firstItem="MZ9-eR-avB" firstAttribute="top" secondItem="YP3-yz-9Le" secondAttribute="bottom" id="S7m-hq-kum"/>
                         <constraint firstItem="CuH-rj-V9V" firstAttribute="leading" secondItem="uK3-g1-Wyo" secondAttribute="leading" id="YjY-fP-0Ne"/>
                         <constraint firstItem="bJR-9J-JkQ" firstAttribute="leading" secondItem="e2h-W8-wua" secondAttribute="leading" constant="20" id="Yst-fi-Ftg"/>
                         <constraint firstAttribute="trailing" secondItem="XAx-0G-zyj" secondAttribute="trailing" constant="8" id="Yy5-nF-w8z"/>

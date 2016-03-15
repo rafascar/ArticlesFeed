@@ -25,8 +25,6 @@ typedef enum
     SortTypeWebsite = 3
 } SortType;
 
-@property (strong, nonatomic) UIDynamicAnimator *animator;
-
 - (void)didPressSortButton:(id)sender;
 - (void)sortArticlesBy:(SortType)sortType;
 

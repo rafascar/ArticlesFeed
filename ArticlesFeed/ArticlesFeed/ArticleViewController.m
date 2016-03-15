@@ -16,6 +16,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // Add mark/unmark as read button to navigation bar
+    UIBarButtonItem *readButton = [[UIBarButtonItem alloc] initWithTitle:@"Unmark as read" style:UIBarButtonItemStylePlain target:self action:@selector(didPressReadButton:)];
+    self.navigationItem.rightBarButtonItem = readButton;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -32,8 +35,15 @@
     else
         [self.imageImageView sd_setImageWithURL:[NSURL URLWithString:self.article.image] placeholderImage:[UIImage imageNamed:@"image-placeholder"]];
     
-    // Show/hide mark as read image
-    self.readImageView.hidden = !self.markAsRead;
+    // Animate readImageView movement
+    [UIView animateWithDuration:1
+                     animations:^{
+                         // Show readImageView
+                         self.readImageView.hidden = NO;
+                         // Set constraint to go down
+                         self.readImageViewBottomConstraint.constant = -123;
+                         [self.view layoutIfNeeded];
+                     }];
 }
 
 - (void)viewDidLayoutSubviews
@@ -45,6 +55,58 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)didPressReadButton:(id)sender
+{
+    [self.view layoutIfNeeded];
+ 
+    // Disable button until animation is completed
+    self.navigationItem.leftBarButtonItem.enabled = NO;
+    
+    // Check if article is marked as read
+    if(self.article.read)
+    {
+        // Change button title to Mark as read
+        self.navigationItem.rightBarButtonItem.title = @"Mark as read";
+        // Animate readImageView movement
+        [UIView animateWithDuration:1
+                         animations:^{
+                             // Set constraint to go up
+                             self.readImageViewBottomConstraint.constant = 0;
+                             [self.view layoutIfNeeded];
+                         }
+                         completion:^(BOOL finished) {
+                             // Hide readImageView after animation
+                             self.readImageView.hidden = YES;
+                             // Enable button
+                             //self.navigationItem.leftBarButtonItem.enabled = YES;
+                         }];
+    }
+    else
+    {
+        // Change button title to Mark as Unread
+        self.navigationItem.rightBarButtonItem.title = @"Unmark as read";
+        // Animate readImageView movement
+        [UIView animateWithDuration:1
+                         animations:^{
+                             // Show readImageView
+                             self.readImageView.hidden = NO;
+                             // Set constraint to go down
+                             self.readImageViewBottomConstraint.constant = -123;
+                             [self.view layoutIfNeeded];
+                         }
+                         completion:^(BOOL finished) {
+                             // Enable button
+                             //self.navigationItem.leftBarButtonItem.enabled = YES;
+                         }];
+    }
+    
+    // Update constraints
+    [self updateViewConstraints];
+    
+    // Mark/Unmark article as read
+    self.article.read = !self.article.read;
 }
 
 /*
